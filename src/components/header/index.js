@@ -24,7 +24,7 @@ class EditChannel extends MetaComponent {
 		let total = '0.00';
 		return `
 		<div>
-			<h3 class="title">${ title }</h3>
+			<h4 class="title">${ title }</h4>
 			<div class="balance-box">
 				<p>Total: </p>
 				<span class="subtotal">
