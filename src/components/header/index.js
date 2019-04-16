@@ -15,16 +15,22 @@ class EditChannel extends MetaComponent {
 	 * add DOM listener
 	 */
 	addListeners() {
-		//
+		this.querySelector('#menu-button')
+		.addEventListener('click', () => {
+			this.handleMenu()
+		})
+	}
+
+	handleMenu() {
+		global.storage.dispatch({type: 'OPEN-MENU'})
 	}
 
 	render () {
-		// this will come from the store
-		let title = 'Shopping Cart';
+		let { viewTitle } = global.storage.getState().Main;
 		let total = '0.00';
 		return `
 		<div>
-			<h4 class="title">${ title }</h4>
+			<h4 class="title">${ viewTitle }</h4>
 			<div class="balance-box">
 				<p>Total: </p>
 				<span class="subtotal">
