@@ -8,7 +8,7 @@ class EditChannel extends MetaComponent {
 	 * MetaComponent constructor needs storage.
 	 */
 	constructor () {
-		super();
+		super(global.storage);
 	}
 
 	/**
@@ -22,7 +22,7 @@ class EditChannel extends MetaComponent {
 	}
 
 	handleMenu() {
-		global.storage.dispatch({type: 'OPEN-MENU'})
+		this.storage.dispatch({type: 'OPEN-MENU'})
 	}
 
 	render () {
@@ -42,6 +42,18 @@ class EditChannel extends MetaComponent {
 			</div>
 		</div>
 		`;
+	}
+
+	handleStoreEvents () {
+		return {
+			'OPEN-ITINERARY': () => {
+				const shceduleLimit = document.createElement('span');
+				shceduleLimit.className = 'schedule-limit';
+				shceduleLimit.innerHTML = 'Thu Apr-16,Sat May-04, 2019'
+				document.querySelector('.title').innerHTML = 'Itinerary';
+				document.querySelector('.balance-box').appendChild(shceduleLimit);
+			}
+		}
 	}
 
 }
