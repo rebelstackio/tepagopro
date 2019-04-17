@@ -1,5 +1,10 @@
 import { MetaComponent } from '@rebelstack-io/metaflux';
-import menuIcon from '../../assets/icons/bars-solid.svg'
+import menuIcon from '../../assets/icons/bars-solid.svg';
+import cartIcon from '../../assets/icons/shopping-cart-solid.svg';
+import itineraryIcon from '../../assets/icons/map-marker-alt-solid.svg';
+import settingIcon from '../../assets/icons/cogs-solid.svg';
+import contactIcon from '../../assets/icons/envelope-solid.svg';
+import historyIcon from '../../assets/icons/history-solid.svg';
 import './index.css';
 
 class EditChannel extends MetaComponent {
@@ -26,13 +31,16 @@ class EditChannel extends MetaComponent {
 	}
 
 	render () {
-		let { viewTitle } = global.storage.getState().Main;
+		const { viewTitle } = global.storage.getState().Main;
 		let total = '0.00';
 		return `
 		<div>
-			<h4 class="title">${ viewTitle }</h4>
+			<div class="title-box">
+				<img src="${ cartIcon }"></img>
+				<h4 class="title">${ viewTitle }</h4>
+			</div>
 			<div class="balance-box">
-				<p>Total: </p>
+				<p>Balance: </p>
 				<span class="subtotal">
 					$${ total }
 				</span> 
@@ -43,15 +51,37 @@ class EditChannel extends MetaComponent {
 		</div>
 		`;
 	}
+	/**
+	 * change the icon base on the view the current state its 
+	 */
+	changeIcon () {
+		const x = this.storage.getState().Main.viewNumber;
+		const titleIcon = document.querySelector('.title-box > img');
+		switch (x) {
+			case 1:
+				titleIcon.src = itineraryIcon;
+				break;
+			case 2:
+				titleIcon.src = settingIcon;
+				break;
+			case 3:
+				titleIcon.src = historyIcon;
+				break;
+			case 4:
+				titleIcon.src = contactIcon;
+				break;
+			default:
+				titleIcon.src = cartIcon;
+				break;
+		}
+	}
 
 	handleStoreEvents () {
 		return {
-			'OPEN-ITINERARY': () => {
-				const shceduleLimit = document.createElement('span');
-				shceduleLimit.className = 'schedule-limit';
-				shceduleLimit.innerHTML = 'Thu Apr-16,Sat May-04, 2019'
-				document.querySelector('.title').innerHTML = 'Itinerary';
-				document.querySelector('.balance-box').appendChild(shceduleLimit);
+			'CHANGE-VIEW': () => {
+				const { viewTitle } = global.storage.getState().Main;
+				this.changeIcon();
+				document.querySelector('.title').innerHTML = viewTitle;
 			}
 		}
 	}

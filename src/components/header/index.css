@@ -1,13 +1,12 @@
 main-header > div {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    background-color: var(--header-color);
-    color: #ffffff;
+	display: grid;
+	grid-template-columns: 3fr 1fr 1fr;
+	background-color: var(--header-color);
+	color: #ffffff;
 }
 
 .balance-box {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+	display: flex;
 }
 
 main-header > div > h4 {
@@ -35,12 +34,18 @@ div#menu-button > img {
 }
 
 .balance-box > p {
-    margin: 0;
-    place-self: center;
+	margin: 0;
+	place-self: center;
+	margin-right: 5px;
 }
 
-span.schedule-limit {
-    font-size: 12px;
-    grid-area: 2 / 1 / span 1 / span 2;
-    place-self: center;
+.title-box {
+	display: flex;
+	align-items: center;
+}
+
+.title-box > img {
+	width: 1.5em;
+	height: auto;
+	margin: 0 5px;
 }
