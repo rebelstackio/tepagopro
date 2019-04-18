@@ -46,7 +46,7 @@ class EditChannel extends MetaComponent {
 				</span> 
 			</div>
 			<div id="menu-button">
-				<img src="${menuIcon}"></img>
+				<img id="menu-img" src="${menuIcon}"></img>
 			</div>
 		</div>
 		`;

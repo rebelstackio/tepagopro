@@ -1,0 +1,27 @@
+dropdown-menu > div {
+	position: relative;
+	width: 80vw;
+	margin: auto;
+	top: -1em;
+	background: #fff;
+	border-radius: 3px;
+	box-shadow: 1px 2px #d3d3d3;
+	padding: .5em;
+	display: grid;
+	grid-row-gap: .5em;
+	opacity: 1;
+}
+
+.menu-item > img {
+	width: 1.5em;
+}
+
+.menu-item {
+	color: #666666;
+	font-weight: 900;
+}
+
+dropdown-menu .tepago-hide {
+	opacity: 0;
+	visibility: hidden;
+}

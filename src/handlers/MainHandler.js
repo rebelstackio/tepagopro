@@ -11,6 +11,7 @@ export default {
 	MainDefaultState,
 	MainHandler: {
 		'CHANGE-VIEW': (action, state) => {
+			console.log('dispatch change view#', action.viewNumber)
 			switch (action.viewNumber) {
 				case 1: 
 					state.Main.viewTitle = 'Itinerary';
