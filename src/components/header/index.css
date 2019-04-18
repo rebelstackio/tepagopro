@@ -1,0 +1,51 @@
+main-header > div {
+	display: grid;
+	grid-template-columns: 3fr 1fr 1fr;
+	background-color: var(--header-color);
+	color: #ffffff;
+}
+
+.balance-box {
+	display: flex;
+}
+
+main-header > div > h4 {
+	text-align: start;
+	place-self: center start;
+	padding-left: 5px;
+}
+
+div#menu-button {
+	width: 2rem;
+	height: 2rem;
+	place-self: center end;
+	align-items: center;
+	display: flex;
+	cursor: pointer;
+}
+
+span.subtotal {
+	place-self: center;
+}
+
+div#menu-button > img {
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.balance-box > p {
+	margin: 0;
+	place-self: center;
+	margin-right: 5px;
+}
+
+.title-box {
+	display: flex;
+	align-items: center;
+}
+
+.title-box > img {
+	width: 1.5em;
+	height: auto;
+	margin: 0 5px;
+}
