@@ -1,0 +1,31 @@
+itinerary-format {
+	display: grid;
+}
+
+span.date-title {
+	background: var(--main-grey);
+	text-align: center;
+}
+
+.itinerary-item {
+    display: grid;
+	grid-template-columns: 3rem 3rem 1fr 3rem;
+    font-size: .8rem;
+    grid-column-gap: .8em;
+}
+
+.itinerary-item > * {
+    place-self: center;
+}
+
+.itinerary-item > img {
+    width: 2rem;
+    height: auto;
+    padding: .5em;
+    border-radius: 50%;
+    background: var(--main-grey);
+}
+
+[class^="type-"] {
+    font-size: .5rem;
+}

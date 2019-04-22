@@ -2,6 +2,7 @@ import { MetaContainer } from '@rebelstack-io/metaflux';
 import '../../handlers';
 import '../../components/header';
 import '../../components/dropdown';
+import '../../components/body';
 import '../../assets/css/general.css';
 
 class TepagoMainContainer extends MetaContainer {
@@ -11,7 +12,8 @@ class TepagoMainContainer extends MetaContainer {
 		content.id = 'container';
 		const header = document.createElement('main-header');
 		const dropdown = document.createElement('dropdown-menu');
-		content.append(header, dropdown);
+		const body = document.createElement('main-body');
+		content.append(header, dropdown, body);
 		return content;
 	}
 }

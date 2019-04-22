@@ -2,11 +2,13 @@
 * DEFAULT HANDLER
 */
 
+import { getItinerary } from '../controllers/firebase';
+
 const MainDefaultState = {
 	viewTitle: 'Shopping cart',
-	viewNumber: 0
+	viewNumber: 0,
+	itinerary: getItinerary()
 };
-
 export default {
 	MainDefaultState,
 	MainHandler: {
