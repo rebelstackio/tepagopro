@@ -1,9 +1,9 @@
 import { MetaComponent } from '@rebelstack-io/metaflux';
 import './index.css';
-//this is use but it's dynamic generated
 import plane from '../../../assets/icons/itinerary/plane.svg';
 import cup from '../../../assets/icons/itinerary/cup.svg';
 import car from '../../../assets/icons/itinerary/car.svg';
+import bed from '../../../assets/icons/itinerary/bed.svg';
 
 class Itinerary extends MetaComponent {
 	constructor () {
@@ -14,19 +14,19 @@ class Itinerary extends MetaComponent {
 		const { itinerary } = global.storage.getState().Main;
 		let html = '';
 		Object.keys(itinerary).forEach(date => {
-			html = `<span class="date-title"> ${date} </span>`
+			html += `<span class="date-title"> ${date} </span>`
 			itinerary[date].forEach(item => {
 				const icon = this.getIcon(item.type);
 				const description = item.description.replace('\n', '</p><p>');
 				html += `
-					<div class="itinerary-item">
+					<div class="itinerary-item ${item.status}">
 						<span>${item.time}</span>
 						<img src=${icon}></img>
 						<div class="itinerary-info">
-							<h3>${item.title}</h3>
-							<span class="type-${item.status}">${item.status}</span>
+							<h3>${item.title} <span class="type">${item.status}</span> </h3>
 							<p>${description}</p>
 						</div>
+						<h3>${ item.amount ? item.amount : '' }</h3>
 					</div>
 				`
 			})
@@ -45,6 +45,8 @@ class Itinerary extends MetaComponent {
 				return cup;
 			case 'car':
 				return car;
+			case 'hotel':
+				return bed; 
 			default:
 				//TODO: add default icon
 				break;

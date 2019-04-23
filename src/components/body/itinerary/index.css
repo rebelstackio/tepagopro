@@ -26,6 +26,26 @@ span.date-title {
     background: var(--main-grey);
 }
 
-[class^="type-"] {
-    font-size: .5rem;
+span.type {
+    font-size: .7rem;
+    font-weight: 400;
+    color: #FFF;
+    padding: .5em;
+    background: #8BC34A;
+}
+
+.itinerary-item.DISABLED {
+    background: #d3d3d3;
+}
+
+.itinerary-item.DISABLED .type {
+    display: none;
+}
+
+.itinerary-item.PENDING .type {
+    display: none;
+}
+
+.itinerary-item.SCHEDULE > img {
+    background: #8bc349;
 }
