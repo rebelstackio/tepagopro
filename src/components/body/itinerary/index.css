@@ -1,4 +1,4 @@
-itinerary-format {
+itinerary-format, item-format {
 	display: grid;
 }
 
@@ -8,44 +8,44 @@ span.date-title {
 }
 
 .itinerary-item {
-    display: grid;
+	display: grid;
 	grid-template-columns: 3rem 3rem 1fr 3rem;
-    font-size: .8rem;
-    grid-column-gap: .8em;
+	font-size: .8rem;
+	grid-column-gap: .8em;
 }
 
 .itinerary-item > * {
-    place-self: center;
+	place-self: center;
 }
 
 .itinerary-item > img {
-    width: 2rem;
-    height: auto;
-    padding: .5em;
-    border-radius: 50%;
-    background: var(--main-grey);
+	width: 2rem;
+	height: auto;
+	padding: .5em;
+	border-radius: 50%;
+	background: var(--main-grey);
 }
 
 span.type {
-    font-size: .7rem;
-    font-weight: 400;
-    color: #FFF;
-    padding: .5em;
-    background: #8BC34A;
+	font-size: .7rem;
+	font-weight: 400;
+	color: #FFF;
+	padding: .5em;
+	background: #8BC34A;
 }
 
 .itinerary-item.DISABLED {
-    background: #d3d3d3;
+	background: #d3d3d3;
 }
 
 .itinerary-item.DISABLED .type {
-    display: none;
+	display: none;
 }
 
 .itinerary-item.PENDING .type {
-    display: none;
+	display: none;
 }
 
 .itinerary-item.SCHEDULE > img {
-    background: #8bc349;
+	background: #8bc349;
 }

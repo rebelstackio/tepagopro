@@ -1,14 +1,80 @@
 import { MetaComponent } from '@rebelstack-io/metaflux';
+import infoIcon from '../../../assets/icons/info-solid.svg';
+import deleteIcon from '../../../assets/icons/times-solid.svg';
 import './index.css';
 
 class ItemFormar extends MetaComponent {
 	constructor () {
-		super();
+		super(global.storage);
+	}
+	/**
+	 * Add DOM listeners
+	 */
+	addListeners () {
+		const deleteButtons = document.querySelectorAll('.delete-btn');
+		const infoButtons = document.querySelectorAll('.info-btn');
+		deleteButtons.forEach(btn => {
+			btn.addEventListener('click', () => {
+				const index = btn.parentElement.id.split('-')[1];
+				const date = btn.parentElement.id.split('-')[0];
+				this.storage.dispatch({ type: 'DELETE-ITEM', index, date })
+			});
+		});
+		infoButtons.forEach(btn => {
+			btn.addEventListener('click', (e) => {
+				const y = e.target.clientHeight + e.target.offsetTop;
+				const menu = document.querySelector('#info-options');
+				menu.setAttribute('style', 'top: ' + y + 'px;');
+				menu.classList.remove('tepago-hide');
+			})
+		})
 	}
 
 	render () {
-		let html = '<h3> TODO </h3>';
+		return this.createItems();
+	}
+	/**
+	 * get the info options
+	 */
+	getInfoTemplate () {
+		return `
+			<div class="tepago-hide" id="info-options"> 
+				<span class="info-item">View Details</span>
+				<span class="info-item">Mark to delete</span>
+				<span class="info-item">Set Timer</span>
+			</div>
+		`
+	}
+
+	/**
+	 * create the items with the store
+	 */
+	createItems () {
+		let html = this.getInfoTemplate();
+		const { inCart } = global.storage.getState().Main;
+		Object.keys(inCart).forEach(date => {
+			html += `<span class="date-title"> ${ date } </span>`
+			inCart[date].forEach((item, i) => {
+				html += `
+					<div id="${ date + '-' + i }" class="box-item">
+						<span>${ item.title }</span>
+						<input type="text" value="${ item.netPrice }" readonly />
+						<img class="info-btn" src="${ infoIcon }"> </img>
+						<img class="delete-btn" src="${ deleteIcon }"> </img>
+					</div>
+				`
+			})
+		})
 		return html;
+	}
+
+	handleStoreEvents () {
+		return {
+			'DELETE-ITEM': () => {
+				this.innerHTML = this.createItems();
+				this.addListeners();
+			}
+		}
 	}
 
 }
