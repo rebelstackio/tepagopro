@@ -1,6 +1,7 @@
 import { MetaComponent } from '@rebelstack-io/metaflux';
 import './shopping';
 import './itinerary';
+import './contactus';
 
 class Body extends MetaComponent {
 	constructor () {
@@ -30,6 +31,12 @@ class Body extends MetaComponent {
 				// clean the DOM
 				this.innerHTML = '';
 				this.appendChild(history);
+				break;
+			case 4:
+				//TODO: create contact us view
+				const contact = document.createElement('contact-us');
+				this.innerHTML = '';
+				this.appendChild(contact);
 				break;
 			default:
 				const shopping = document.createElement('item-format');
