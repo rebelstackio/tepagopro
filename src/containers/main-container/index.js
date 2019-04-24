@@ -14,7 +14,25 @@ class TepagoMainContainer extends MetaContainer {
 		const dropdown = document.createElement('dropdown-menu');
 		const body = document.createElement('main-body');
 		content.append(header, dropdown, body);
+		this.addListeners()
 		return content;
+	}
+	/**
+	 * add DOM Listeners
+	 */
+	addListeners () {
+		document.body.addEventListener('click', (e) => {
+			if (e.target.id !== 'menu-button' && e.target.id !== 'menu-img'){
+				// if not the button for the open menu the you click outside
+				global.storage.dispatch({ type: 'CLOSE-MENU' })
+			}
+			if (e.target.className !== 'info-btn' &&
+				e.target.id !== 'info-options' &&
+				e.target.className !== 'info-item'
+				) {
+				document.querySelector('#info-options').classList.add('tepago-hide');
+			}
+		})
 	}
 }
 
