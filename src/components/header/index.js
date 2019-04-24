@@ -7,7 +7,7 @@ import contactIcon from '../../assets/icons/envelope-solid.svg';
 import historyIcon from '../../assets/icons/history-solid.svg';
 import './index.css';
 
-class EditChannel extends MetaComponent {
+class Header extends MetaComponent {
 	
 	/**
 	 * MetaComponent constructor needs storage.
@@ -88,4 +88,4 @@ class EditChannel extends MetaComponent {
 
 }
 
-window.customElements.define('main-header', EditChannel);
+window.customElements.define('main-header', Header);
