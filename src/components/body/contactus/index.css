@@ -1,4 +1,4 @@
-contact-us > * {
+contact-us > *, main-settings > * {
 	display: flex;
 	align-items: center;
 	cursor: pointer;

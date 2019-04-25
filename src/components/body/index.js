@@ -2,6 +2,7 @@ import { MetaComponent } from '@rebelstack-io/metaflux';
 import './shopping';
 import './itinerary';
 import './contactus';
+import './settings';
 
 class Body extends MetaComponent {
 	constructor () {
@@ -25,6 +26,9 @@ class Body extends MetaComponent {
 				break;
 			case 2:
 				// TODO: create settings view
+				const settings = document.createElement('main-settings');
+				this.innerHTML = '';
+				this.appendChild(settings);
 				break;
 			case 3: 
 				const history = document.createElement('item-format');
