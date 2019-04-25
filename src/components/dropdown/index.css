@@ -27,8 +27,8 @@ dropdown-menu > div {
 	color: #666666;
 	font-weight: 900;
 }
-
-dropdown-menu .tepago-hide {
+.tepago-hide {
 	opacity: 0;
 	visibility: hidden;
+	display: none;
 }

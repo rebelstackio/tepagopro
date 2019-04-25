@@ -32,12 +32,6 @@ class Dropdown extends MetaComponent {
 				})
 			})
 		}
-		document.body.addEventListener('click', (e) => {
-			if (e.target.id !== 'menu-button' && e.target.id !== 'menu-img'){
-				// if not the button for the open menu the you click outside
-				this.storage.dispatch({ type: 'CLOSE-MENU' })
-			}
-		})
 	}
 
 	render () {
