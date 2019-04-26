@@ -49,3 +49,18 @@ export function getItinerary () {
 		]
 	}
 }
+/**
+ * get remenber accounts
+ */
+export function getPaypalAcounts () {
+	return [
+		{
+			email: 'test@example.com',
+			isDefault: true
+		},
+		{
+			email: 'example@test.com',
+			isDefault: false
+		}
+	]
+}

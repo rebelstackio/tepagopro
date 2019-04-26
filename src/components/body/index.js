@@ -3,6 +3,7 @@ import './shopping';
 import './itinerary';
 import './contactus';
 import './settings';
+import './paypal';
 
 class Body extends MetaComponent {
 	constructor () {
@@ -41,6 +42,11 @@ class Body extends MetaComponent {
 				const contact = document.createElement('contact-us');
 				this.innerHTML = '';
 				this.appendChild(contact);
+				break;
+			case 5: 
+				const payPal = document.createElement('paypal-crud');
+				this.innerHTML = ''
+				this.appendChild(payPal);
 				break;
 			default:
 				const shopping = document.createElement('item-format');

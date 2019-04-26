@@ -1,0 +1,66 @@
+.account-item {
+	display: grid;
+	grid-template-columns: 2em 1fr 2em;
+	grid-column-gap: .5em;
+}
+
+paypal-crud {
+	grid-row-gap: .5em;
+}
+
+.account-item > * {
+	place-self: center;
+}
+
+.account-item > img {
+	cursor: pointer;
+	height: auto;
+	width: 1.5rem;
+}
+
+.account-item > input {
+	outline: none;
+	border: 1px solid #d3d3d3;
+	text-align: center;
+	height: 4vh;
+	border-radius: 3px;
+}
+
+[type="button"] {
+	border: none;
+	background: var(--header-color);
+	color: #fff;
+	border-radius: 3px;
+	height: 4vh;
+}
+
+input#add-paypal {
+	width: 50vw;
+	place-self: center;
+}
+
+div#new-account {
+	position: absolute;
+	width: 90%;
+	height: auto;
+	display: grid;
+	background: #fff;
+	grid-template-rows: 1fr 4vh 4vh;
+	top: 25vh;
+	border-radius: 3px;
+	box-shadow: 0px 0px 10px 4px #d3d3d3;
+	padding: .5em;
+	left: 3%;
+	grid-row-gap: .5em;
+}
+
+div#new-account > img {
+	width: 35vw;
+	place-self: center;
+}
+
+.account-actions {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: .5em;
+}

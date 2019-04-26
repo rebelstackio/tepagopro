@@ -21,18 +21,23 @@ class TepagoMainContainer extends MetaContainer {
 	 * add DOM Listeners
 	 */
 	addListeners () {
-		document.body.addEventListener('click', (e) => {
-			if (e.target.id !== 'menu-button' && e.target.id !== 'menu-img'){
-				// if not the button for the open menu the you click outside
-				global.storage.dispatch({ type: 'CLOSE-MENU' })
-			}
-			if (e.target.className !== 'info-btn' &&
-				e.target.id !== 'info-options' &&
-				e.target.className !== 'info-item'
-				) {
-				document.querySelector('#info-options').classList.add('tepago-hide');
-			}
-		})
+		try {
+			document.body.addEventListener('click', (e) => {
+				if (e.target.id !== 'menu-button' && e.target.id !== 'menu-img'){
+					// if not the button for the open menu the you click outside
+					global.storage.dispatch({ type: 'CLOSE-MENU' })
+				}
+				if (e.target.className !== 'info-btn' &&
+					e.target.id !== 'info-options' &&
+					e.target.className !== 'info-item' &&
+					document.querySelector('#info-options') !== null
+					) {
+					document.querySelector('#info-options').classList.add('tepago-hide');
+				}
+			})
+		} catch (err) {
+			console.warn(err);
+		}
 	}
 }
 
