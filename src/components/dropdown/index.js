@@ -4,6 +4,7 @@ import itineraryIcon from '../../assets/icons/dark/map-marker-alt-solid.svg';
 import settingIcon from '../../assets/icons/dark/cogs-solid.svg';
 import contactIcon from '../../assets/icons/dark/envelope-solid.svg';
 import historyIcon from '../../assets/icons/dark/history-solid.svg';
+import paypalIcon from '../../assets/icons/dark/paypal-brands.svg';
 import './index.css';
 
 class Dropdown extends MetaComponent {
@@ -52,6 +53,10 @@ class Dropdown extends MetaComponent {
 				<div class="menu-item">
 					<img src="${ contactIcon }"></img>
 					<a title="4"> Contact us </a>
+				</div>
+				<div class="menu-item">
+					<img src="${ paypalIcon }"></img>
+					<a title="5"> Paypal </a>
 				</div>
 				<div class="menu-item">
 					<img src="${ settingIcon }"></img>

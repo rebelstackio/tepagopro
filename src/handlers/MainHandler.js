@@ -76,6 +76,13 @@ export default {
 			array[action.index].isDefault = true;
 			state.Main.paypalAcounts = array;
 			return { newState: state }
+		},
+		'ADD-NEW-ACCOUNT': (action, state) => {
+			state.Main.paypalAcounts.push({
+				email: action.data.email,
+				isDefault: false
+			});
+			return { newState: state }
 		}
 	}
 };

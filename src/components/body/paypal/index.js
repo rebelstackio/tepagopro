@@ -8,11 +8,13 @@ import './index.css';
 class Paypal extends MetaComponent {
 	constructor () {
 		super (global.storage);
+		this.addNewAccount = this.addNewAccount.bind(this);
 	}
 	/**
 	 * ADD DOM LISTENERS
 	 */
 	addListeners () {
+		// delete buttons for every item
 		document.querySelectorAll('.delete-item')
 		.forEach(btn => {
 			btn.addEventListener('click', (e) => {
@@ -20,6 +22,7 @@ class Paypal extends MetaComponent {
 				this.storage.dispatch({ type: 'DELETE-ACCOUNT', index });
 			})
 		});
+		// unchecked items to set as default an account
 		document.querySelectorAll('.unselected-account')
 		.forEach(btn => {
 			btn.addEventListener('click', (e) => {
@@ -27,14 +30,19 @@ class Paypal extends MetaComponent {
 				this.storage.dispatch({ type: 'SET-DEFAULT-ACCOUNT', index });
 			})
 		});
+		// cancel button for the add new account window
 		document.querySelector('#cancel-btn')
 		.addEventListener('click', () => {
 			this.toggleNew();
 		});
+		// add new account button
 		document.querySelector('#add-paypal')
 		.addEventListener('click', () => {
 			this.toggleNew();
-		})
+		});
+		// dispatch the event of add new paypal account
+		document.querySelector('#add-new')
+		.addEventListener('click', this.addNewAccount);
 	}
 
 	render () {
@@ -79,6 +87,21 @@ class Paypal extends MetaComponent {
 		const popup = document.querySelector('#new-account');
 		popup.classList.toggle('tepago-hide');
 	}
+	/**
+	 * add item to the store
+	 */
+	addNewAccount () {
+		const email = document.querySelector('#new-account > input[type="email"]').value;
+		const pass = document.querySelector('#new-account > input[type="password"]').value;
+		if (email !== '' && pass !== '') {
+			this.storage.dispatch({
+				type: 'ADD-NEW-ACCOUNT',
+				data: {
+					email, pass
+				}
+			});
+		}
+	}
 
 	handleStoreEvents () {
 		return {
@@ -87,6 +110,10 @@ class Paypal extends MetaComponent {
 				this.addListeners();
 			},
 			'SET-DEFAULT-ACCOUNT': () => {
+				this.innerHTML = this.render();
+				this.addListeners();
+			},
+			'ADD-NEW-ACCOUNT': () => {
 				this.innerHTML = this.render();
 				this.addListeners();
 			}

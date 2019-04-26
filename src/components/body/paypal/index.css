@@ -64,3 +64,9 @@ div#new-account > img {
 	grid-template-columns: 1fr 1fr;
 	grid-column-gap: .5em;
 }
+
+div#new-account > input {
+	border: 1px solid #d3d3d3;
+	outline: none;
+	padding-left: .5rem;
+}
