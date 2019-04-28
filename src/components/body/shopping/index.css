@@ -1,36 +1,38 @@
 
 .box-item {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1.5rem 1.5rem;
-    grid-column-gap: .5rem;
-    padding: .5rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1.5rem 1.5rem;
+	grid-column-gap: .5rem;
+	padding: .5rem;
 }
 
 .box-item > * {
-    place-self: center;
+	place-self: center;
 }
 
 .box-item > input {
-    outline: none;
-    border: 1px solid #d3d3d3;
-    text-align: center;
-    height: 4vh;
-    border-radius: 3px;
+	outline: none;
+	border: 1px solid #d3d3d3;
+	text-align: center;
+	height: 4vh;
+	border-radius: 3px;
 }
 
 .box-item > img {
-    cursor: pointer;
+	cursor: pointer;
+	width: 1.5rem;
+	height: auto;
 }
 
 #info-options {
-    position: absolute;
-    height: 10vh;
-    background: #fff;
-    width: 50%;
-    left: 28%;
-    border: 1px solid #d3d3d3;
-    border-radius: 3px;
-    display: grid;
-    padding: .5rem;
-    font-size: 1rem;
+	position: absolute;
+	height: 10vh;
+	background: #fff;
+	width: 50%;
+	left: 28%;
+	border: 1px solid #d3d3d3;
+	border-radius: 3px;
+	display: grid;
+	padding: .5rem;
+	font-size: 1rem;
 }
