@@ -2,7 +2,7 @@
 * DEFAULT HANDLER
 */
 
-import { getItinerary } from '../controllers/firebase';
+import { getItinerary, getPaypalAcounts } from '../controllers/firebase';
 
 const MainDefaultState = {
 	viewTitle: 'Shopping cart',
@@ -26,7 +26,8 @@ const MainDefaultState = {
 				netPrice: '00.00'
 			}
 		]
-	}
+	},
+	paypalAcounts: getPaypalAcounts()
 };
 export default {
 	MainDefaultState,
@@ -57,6 +58,30 @@ export default {
 			let array = state.Main.inCart[action.date];
 			array.splice(action.index, 1);
 			state.Main.inCart[action.date] = array;
+			return { newState: state }
+		},
+		'DELETE-ACCOUNT': (action, state) => {
+			let array = state.Main.paypalAcounts;
+			array.splice(action.index, 1);
+			state.Main.paypalAcounts = array;
+			return { newState: state }
+		},
+		'SET-DEFAULT-ACCOUNT': (action, state) => {
+			let array = state.Main.paypalAcounts.map(item => {
+				if (item.isDefault) {
+					item.isDefault = false;
+				}
+				return item;
+			});
+			array[action.index].isDefault = true;
+			state.Main.paypalAcounts = array;
+			return { newState: state }
+		},
+		'ADD-NEW-ACCOUNT': (action, state) => {
+			state.Main.paypalAcounts.push({
+				email: action.data.email,
+				isDefault: false
+			});
 			return { newState: state }
 		}
 	}
