@@ -11,9 +11,9 @@ module.exports = () => {
 	// 	path: path.resolve(process.cwd(), '.env')
 	// }).parsed;
 
-	if ( process.env.NODE_MODE == 'build' ) {
-		filename = 'tepago.html';
-	}
+	// if ( process.env.NODE_MODE == 'build' ) {
+	// 	filename = 'tepago.html';
+	// }
 
 	// Reduce it to a nice object, the same as before
 	// const envKeys = Object.keys(env).reduce((prev, next) => {
