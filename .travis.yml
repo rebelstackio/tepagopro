@@ -34,7 +34,7 @@ notifications:
     - 'Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository_slug}@%{branch}
       by %{author} %{result} in %{duration}. Develop branch deploy:  https://rebelstackio.github.io/tepagopro/'
     - 'Pull Request <%{pull_request_url}|#%{pull_request_number}> by %{author} %{result}.
-      Pull request deploy: http://tepagospro-%{pull_request_number}.s3-website-us-west-1.amazonaws.com'
+      Pull request deploy: http://tepagopro-%{pull_request_number}.s3-website-us-west-1.amazonaws.com'
     on_success: always
     on_failure: always
 env:
