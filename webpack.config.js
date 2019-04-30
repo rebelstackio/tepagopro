@@ -7,19 +7,19 @@ const webpack = require('webpack');
 module.exports = () => {
 	let filename = 'index.html';
 	// Call dotenv and it will return an Object with a parsed key 
-	const env = dotenv.config({
-		path: path.resolve(process.cwd(), '.env')
-	}).parsed;
+	// const env = dotenv.config({
+	// 	path: path.resolve(process.cwd(), '.env')
+	// }).parsed;
 
 	if ( process.env.NODE_MODE == 'build' ) {
 		filename = 'tepago.html';
 	}
 
 	// Reduce it to a nice object, the same as before
-	const envKeys = Object.keys(env).reduce((prev, next) => {
-		 prev[`process.env.${next}`] = JSON.stringify(env[next]);
-		 return prev;
-	 }, {});
+	// const envKeys = Object.keys(env).reduce((prev, next) => {
+	// 	 prev[`process.env.${next}`] = JSON.stringify(env[next]);
+	// 	 return prev;
+	//  }, {});
 
 	const defaultobject = {
 		entry: './src/main/index.js',
@@ -74,7 +74,7 @@ module.exports = () => {
 				filename: filename,
 				inject: 'body'
 			}),
-			new webpack.DefinePlugin(envKeys),
+			// new webpack.DefinePlugin(envKeys),
 		],
 		devtool: 'source-map'
 	}
