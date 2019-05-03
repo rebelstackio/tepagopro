@@ -1,0 +1,42 @@
+dist: xenial
+language: node_js
+node_js: '10'
+sudo: false
+branches:
+  only:
+  - develop
+cache:
+  directories:
+  - node_modules
+before_install:
+- pip install --user awscli
+- export PATH=$PATH:$HOME/.local/bin
+install:
+- npm install
+script:
+- npm run build
+- export PATH=$PATH:$HOME/.local/bin
+- '[ "${TRAVIS_PULL_REQUEST}" = "false" ] && npm test || sh ./vagrant/travis.provision.sh
+  ${TRAVIS_PULL_REQUEST}'
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: "$GITHUB_TOKEN"
+  keep-history: false
+  local-dir: dist
+  on:
+    branch: develop
+notifications:
+  slack:
+    rooms:
+    - rebelstackio:2OX3veUhtUvTjMF9m4T5coGG
+    template:
+    - 'Build <%{build_url}|#%{build_number}> (<%{compare_url}|%{commit}>) of %{repository_slug}@%{branch}
+      by %{author} %{result} in %{duration}. Develop branch deploy:  https://rebelstackio.github.io/tepagopro/'
+    - 'Pull Request <%{pull_request_url}|#%{pull_request_number}> by %{author} %{result}.
+      Pull request deploy: http://tepagopro-%{pull_request_number}.s3-website-us-west-1.amazonaws.com'
+    on_success: always
+    on_failure: always
+env:
+  global:
+    secure: Ojg26HYjtG2SmX2q+Ac1tdCTANl1UHUT1xbJk6LkGEVM9jLiQYLggmdciDlw8RNet+xFAVaeI+ItnH8bvlOManFPkqh3rLRyrmfXDFbZcgdumVrcEiR72wujwTpsnqxhDBBwDPqeAhgpL7ofw/r6D5IV2VdzO/YXGgFZORGlb+gZRhtNuy4MBf6HyM3asWALdnbfZ6KWM2lmrw6SfzG0uR6T+pHSpaATC98vsKfWH/hlFPODbV6HU2oRTJC1K9LiOTMu8cMSuLD9pF97aKRIQvmj47wpRC2f7+N39BAZ4XuM0GP6dy3i8ekosqFaFDOsKKu18PB53vb9C3YuOq43WKzEwwTmRYdCBBcgNmwCCnNO7w3AnVJ/WmVfUWjwMomHRwgtsENWcZZpPF0h6iu0+kkCWrqoTYo/UnVbziirZsIkkD1YqvMatQjxenNtSvrdmUKGPbOzUbtWsXTcJ5g91Ec8vUbr666XUgEkp/QGYZZTjEqEyGM7CnC0XP6r40c7jPy9EUYi21zceI9l3My5LNsPaXHarJuLUGMoPMxgqFXePG7Nu01wk+NMFMi0995MGjSlZm6YyXKf0RwhiveiUjGfzPpzaqSz/45yMaIjV5UU3dGh2hcicOeRYPiJs6WEr29aLcAs75oBkAWfcMFEOvrzmQdsUeAxIMxC5Un31Wo=
