@@ -7,7 +7,7 @@ import './paypal';
 
 class Body extends MetaComponent {
 	constructor () {
-		super(global.storage);
+		super(global.TPGstorage);
 	}
 
 	render () {

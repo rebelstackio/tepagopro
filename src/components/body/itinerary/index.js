@@ -11,7 +11,7 @@ class Itinerary extends MetaComponent {
 	}
 
 	render () {
-		const { itinerary } = global.storage.getState().Main;
+		const { itinerary } = global.TPGstorage.getState().Main;
 		let html = '';
 		Object.keys(itinerary).forEach(date => {
 			html += `<span class="date-title"> ${date} </span>`
@@ -38,15 +38,17 @@ class Itinerary extends MetaComponent {
 	 * @param {String} type 
 	 */
 	getIcon(type) {
+		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		let isMeta = metaAsset !== null;
 		switch (type) {
 			case 'plane':
-				return plane;
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/plane.svg' : plane;
 			case 'cup':
-				return cup;
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/cup.svg' : cup;
 			case 'car':
-				return car;
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/car.svg' : car;
 			case 'hotel':
-				return bed; 
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/bed.svg' : bed; 
 			default:
 				//TODO: add default icon
 				break;

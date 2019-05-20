@@ -5,7 +5,7 @@ import './index.css';
 
 class ItemFormar extends MetaComponent {
 	constructor () {
-		super(global.storage);
+		super(global.TPGstorage);
 	}
 	/**
 	 * Add DOM listeners
@@ -23,8 +23,9 @@ class ItemFormar extends MetaComponent {
 		infoButtons.forEach(btn => {
 			btn.addEventListener('click', (e) => {
 				const y = e.target.clientHeight + e.target.offsetTop;
+				const x = e.target.offsetLeft - 160;
 				const menu = document.querySelector('#info-options');
-				menu.setAttribute('style', 'top: ' + y + 'px;');
+				menu.setAttribute('style', 'top: ' + y + 'px; left: ' + x + 'px');
 				menu.classList.remove('tepago-hide');
 			})
 		})
@@ -51,7 +52,9 @@ class ItemFormar extends MetaComponent {
 	 */
 	createItems () {
 		let html = this.getInfoTemplate();
-		const { inCart } = global.storage.getState().Main;
+		const { inCart } = global.TPGstorage.getState().Main;
+		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		let isMeta = metaAsset !== null;
 		Object.keys(inCart).forEach(date => {
 			html += `<span class="date-title"> ${ date } </span>`
 			inCart[date].forEach((item, i) => {
@@ -59,8 +62,12 @@ class ItemFormar extends MetaComponent {
 					<div id="${ date + '-' + i }" class="box-item">
 						<span>${ item.title }</span>
 						<input type="text" value="${ item.netPrice }" readonly />
-						<img class="info-btn" src="${ infoIcon }"> </img>
-						<img class="delete-btn" src="${ deleteIcon }"> </img>
+						<img class="info-btn" src="${ isMeta 
+							? metaAsset.content + 'src/assets/icons/info-solid.svg'
+							: infoIcon }"> </img>
+						<img class="delete-btn" src="${ isMeta 
+							? metaAsset.content + 'src/assets/icons/times-solid.svg'
+							: deleteIcon }"> </img>
 					</div>
 				`
 			})

@@ -25,7 +25,7 @@ class TepagoMainContainer extends MetaContainer {
 			document.body.addEventListener('click', (e) => {
 				if (e.target.id !== 'menu-button' && e.target.id !== 'menu-img'){
 					// if not the button for the open menu the you click outside
-					global.storage.dispatch({ type: 'CLOSE-MENU' })
+					global.TPGstorage.dispatch({ type: 'CLOSE-MENU' })
 				}
 				if (e.target.className !== 'info-btn' &&
 					e.target.id !== 'info-options' &&

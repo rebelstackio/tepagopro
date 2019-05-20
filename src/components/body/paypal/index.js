@@ -7,7 +7,7 @@ import './index.css';
 
 class Paypal extends MetaComponent {
 	constructor () {
-		super (global.storage);
+		super (global.TPGstorage);
 		this.addNewAccount = this.addNewAccount.bind(this);
 	}
 	/**

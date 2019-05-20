@@ -13,7 +13,7 @@ class Dropdown extends MetaComponent {
 	 * MetaComponent constructor needs storage.
 	 */
 	constructor () {
-		super(global.storage);
+		super(global.TPGstorage);
 	}
 
 	/**
@@ -36,30 +36,51 @@ class Dropdown extends MetaComponent {
 	}
 
 	render () {
+		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		const metaType = document.querySelector('meta[name="tepago-type"]');
+		let isCustomer = (metaType !== null) && (metaType.content !== 'client');
+		let isMeta = metaAsset !== null;
+		const paypalElement = `
+		<div class="menu-item">
+		<img src="${ isMeta
+			? metaAsset.content + 'src/assets/icons/dark/paypal-brands.svg'
+			: paypalIcon }"></img>
+		<a title="5"> Paypal </a>
+		</div>
+		`;
 		return `
 			<div class="menu-body tepago-hide">
 				<div class="menu-item">
-					<img src="${ cartIcon }"></img>
+					<img src="${ isMeta
+						? metaAsset.content + 'src/assets/icons/dark/shopping-cart-solid.svg'
+						:cartIcon }"></img>
 					<a title="0"> Shopping cart </a>
 				</div>
 				<div class="menu-item">
-					<img src="${ itineraryIcon }"></img>
+					<img src="${ isMeta
+						? metaAsset.content + 'src/assets/icons/dark/map-marker-alt-solid.svg'
+						:itineraryIcon }"></img>
 					<a title="1"> Itinerary </a>
 				</div>
 				<div class="menu-item">
-					<img src="${ historyIcon }"></img>
+					<img src="${ isMeta
+						? metaAsset.content + 'src/assets/icons/dark/history-solid.svg'
+						: historyIcon }"></img>
 					<a title="3"> History </a>
 				</div>
 				<div class="menu-item">
-					<img src="${ contactIcon }"></img>
+					<img src="${ isMeta
+						? metaAsset.content + 'src/assets/icons/dark/envelope-solid.svg'
+						: contactIcon }"></img>
 					<a title="4"> Contact us </a>
 				</div>
+				
+				${ isCustomer ? paypalElement : '' }
+				
 				<div class="menu-item">
-					<img src="${ paypalIcon }"></img>
-					<a title="5"> Paypal </a>
-				</div>
-				<div class="menu-item">
-					<img src="${ settingIcon }"></img>
+					<img src="${ isMeta
+						? metaAsset.content + 'src/assets/icons/dark/cogs-solid.svg'
+						: settingIcon }"></img>
 					<a title="2"> Settings </a>
 				</div>
 			</div>
@@ -68,8 +89,10 @@ class Dropdown extends MetaComponent {
 
 	handleStoreEvents () {
 		return {
-			'OPEN-MENU': () => {
-				document.querySelector('.menu-body').classList.remove('tepago-hide');
+			'OPEN-MENU': (action) => {
+				const DD = document.querySelector('.menu-body')
+				DD.setAttribute('style', 'top:' + action.data.y + 'px; left: 15px;')
+				DD.classList.remove('tepago-hide');
 			},
 			'CLOSE-MENU': () => {
 				document.querySelector('.menu-body').classList.add('tepago-hide');

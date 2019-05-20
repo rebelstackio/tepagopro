@@ -3,7 +3,7 @@ import main from './MainHandler';
 
 const { MainDefaultState, MainHandler } = main;
 
-global.storage = new Store(
+global.TPGstorage = new Store(
 	{Main: MainDefaultState},
 	MainHandler
 );

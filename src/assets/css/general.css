@@ -3,3 +3,9 @@
 	--main-grey: #b2b3b4;
 	--light-grey: #e2e2e2;
 }
+
+@media only screen and (min-width: 800px) { 
+	.menu-body {
+		left: -265px !important;
+	}
+}
