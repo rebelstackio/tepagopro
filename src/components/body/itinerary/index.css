@@ -14,10 +14,6 @@ span.date-title {
 	grid-column-gap: .8em;
 }
 
-.itinerary-item > * {
-	place-self: center;
-}
-
 .itinerary-item > img {
 	width: 2rem;
 	height: auto;
@@ -48,4 +44,20 @@ span.type {
 
 .itinerary-item.SCHEDULE > img {
 	background: #8bc349;
+}
+
+.new-item {
+	display: grid;
+}
+
+.new-item input {
+	border: 1px solid #d3d3d3;
+	outline: none;
+	height: 6vh;
+	padding-left: 5px;
+}
+
+.new-item > div {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
 }

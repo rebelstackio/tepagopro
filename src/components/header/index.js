@@ -10,7 +10,7 @@ import './index.css';
 class Header extends MetaComponent {
 	
 	/**
-	 * MetaComponent constructor needs storage.
+	 * MetaComponent constructor needs TPGstorage.
 	 */
 	constructor () {
 		super(global.TPGstorage);
@@ -103,7 +103,19 @@ class Header extends MetaComponent {
 				const { viewTitle } = global.TPGstorage.getState().Main;
 				this.changeIcon();
 				document.querySelector('.title').innerHTML = viewTitle;
-			}
+			},'ADD-ITINERARY': () => {
+				const { itinerary } = this.storage.getState().Main;
+			},
+			'ADD-ITINERARY-EXT': () => {
+				const { itinerary } = this.storage.getState().Main;
+				let total = 0;
+				Object.keys(itinerary).forEach(date => {
+					itinerary[date].forEach(el => {
+						total += parseFloat(el.amount) * parseInt(el.qty);
+					})
+				});
+				document.querySelector('.subtotal').innerHTML = '$' + total;
+			},
 		}
 	}
 

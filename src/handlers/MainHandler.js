@@ -27,6 +27,7 @@ const MainDefaultState = {
 			}
 		]
 	},
+	lastItinerary: {},
 	paypalAcounts: getPaypalAcounts()
 };
 export default {
@@ -82,6 +83,48 @@ export default {
 				email: action.data.email,
 				isDefault: false
 			});
+			return { newState: state }
+		},
+		'ADD-ITINERARY': (action, state) => {
+			const { data } = action;
+			const date = new Date(data.date).toDateString();
+			const { itinerary } = state.Main;
+			state.Main.lastItinerary = data;
+			const newItinerary = Object.assign({}, itinerary, {
+				[date]: [{
+					time: data.time,
+					amount: data.price,
+					type: data.icon,
+					title: data.title,
+					status: 'PENDING',
+					description: data.description,
+					qty: data.qty
+				}]
+			});
+			state.Main.itinerary = newItinerary;
+			return { newState: state }
+		},
+		'CLEAR-ITINERARY': (action, state) => {
+			state.Main.itinerary = {};
+			return { newState: state }
+		},
+		'ADD-ITINERARY-EXT': (action, state) => {
+			const { data } = action;
+			const { itinerary } = state.Main;
+			state.Main.lastItinerary = data;
+			const date = new Date(data.date).toDateString();
+			const newItinerary = Object.assign({}, itinerary, {
+				[date]: [{
+					time: data.time,
+					amount: data.price,
+					type: data.icon,
+					title: data.title,
+					status: 'PENDING',
+					description: data.description,
+					qty: data.qty
+				}]
+			});
+			state.Main.itinerary = newItinerary;
 			return { newState: state }
 		}
 	}

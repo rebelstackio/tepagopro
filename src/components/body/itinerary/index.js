@@ -7,11 +7,61 @@ import bed from '../../../assets/icons/itinerary/bed.svg';
 
 class Itinerary extends MetaComponent {
 	constructor () {
-		super();
+		super(global.TPGstorage);
+	}
+	/**
+	 * ADD DOM LISTENERS
+	 */
+	addListeners () {
+		document.querySelector('#add-item').addEventListener('click', () => {
+			const inputArray = document.querySelectorAll('.input-area > input');
+			let data = {};
+			inputArray.forEach(inp => {
+				data[inp.name] = inp.value;
+			});
+			const icon = document.querySelector('.input-area > select').value;
+			data.icon = icon;
+			this.storage.dispatch({ type: 'ADD-ITINERARY', data })
+		})
 	}
 
 	render () {
-		const { itinerary } = global.TPGstorage.getState().Main;
+		let html = this.createItineraryItem();
+		html += this.getAddItem();
+		return html;
+	}
+	/**
+	 * get the add item section
+	 */
+	getAddItem () {
+		const metaType = document.querySelector('meta[name="tepago-type"]');
+		let isCustomer = (metaType !== null) && (metaType.content !== 'client');
+		return !isCustomer
+		? `
+			<div class="new-item">
+				<div class="input-area">
+					<input type="text" name="title" placeholder="title"/>
+					<input type="text" name="description" placeholder="Description"/>
+					<input type="text" name="qty" placeholder="Qty"/>
+					<input type="text" name="price" placeholder="Price"/>
+					<input type="text" name="date" placeholder="Date"/>
+					<input type="text" name="time" placeholder="Time"/>
+					<select>
+						<option value="car"> Car </option>
+						<option value="bed"> Bed </option>
+						<option value="cup"> Cup </option>
+						<option value="plane"> Plane </option>
+						<option value="utensils"> Utensils </option>
+					</select>
+				</div>
+				<input type="submit" id="add-item" value="Add">
+			</div>
+		` : '';
+	}
+
+	createItineraryItem () {
+		const { itinerary } = this.storage.getState().Main;
+		console.log(itinerary);
 		let html = '';
 		Object.keys(itinerary).forEach(date => {
 			html += `<span class="date-title"> ${date} </span>`
@@ -47,7 +97,7 @@ class Itinerary extends MetaComponent {
 				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/cup.svg' : cup;
 			case 'car':
 				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/car.svg' : car;
-			case 'hotel':
+			case 'bed':
 				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/bed.svg' : bed; 
 			default:
 				//TODO: add default icon
@@ -55,6 +105,25 @@ class Itinerary extends MetaComponent {
 		}
 	}
 	
+	handleStoreEvents () {
+		return {
+			'ADD-ITINERARY': () => {
+				this.innerHTML = this.createItineraryItem();
+				this.innerHTML += this.getAddItem();
+				this.addListeners();
+			},
+			'ADD-ITINERARY-EXT': () => {
+				this.innerHTML = this.createItineraryItem();
+				this.innerHTML += this.getAddItem();
+				this.addListeners();
+			},
+			'CLEAR-ITINERARY': () => {
+				this.innerHTML = this.createItineraryItem();
+				this.innerHTML = this.getAddItem();
+				this.addListeners();
+			}
+		}
+	}
 
 }
 

@@ -10,7 +10,7 @@ import './index.css';
 class Dropdown extends MetaComponent {
 	
 	/**
-	 * MetaComponent constructor needs storage.
+	 * MetaComponent constructor needs TPGstorage.
 	 */
 	constructor () {
 		super(global.TPGstorage);
