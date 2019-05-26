@@ -42,8 +42,8 @@ class Header extends MetaComponent {
 		<div>
 			<div class="title-box">
 				<img src="${ isMeta 
-					? metaAsset.content + '/src/assets/icons/shopping-cart-solid.svg'
-					: cartIcon }"></img>
+					? metaAsset.content + '/src/assets/icons/map-marker-alt-solid.svg'
+					: itineraryIcon }"></img>
 				<h4 class="title">${ viewTitle }</h4>
 			</div>
 			<div class="balance-box">

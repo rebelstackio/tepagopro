@@ -6,7 +6,7 @@ import { getItinerary, getPaypalAcounts } from '../controllers/firebase';
 
 const MainDefaultState = {
 	viewTitle: 'Shopping cart',
-	viewNumber: 0,
+	viewNumber: 1,
 	itinerary: getItinerary(),
 	inCart: {
 		'Thursday, Jan 8, 2017': [

@@ -13,16 +13,19 @@ class Itinerary extends MetaComponent {
 	 * ADD DOM LISTENERS
 	 */
 	addListeners () {
-		document.querySelector('#add-item').addEventListener('click', () => {
-			const inputArray = document.querySelectorAll('.input-area > input');
-			let data = {};
-			inputArray.forEach(inp => {
-				data[inp.name] = inp.value;
+		const addBtn = document.querySelector('#add-item');
+		if (addBtn !== null) {
+			addBtn.addEventListener('click', () => {
+				const inputArray = document.querySelectorAll('.input-area > input');
+				let data = {};
+				inputArray.forEach(inp => {
+					data[inp.name] = inp.value;
+				});
+				const icon = document.querySelector('.input-area > select').value;
+				data.icon = icon;
+				this.storage.dispatch({ type: 'ADD-ITINERARY', data })
 			});
-			const icon = document.querySelector('.input-area > select').value;
-			data.icon = icon;
-			this.storage.dispatch({ type: 'ADD-ITINERARY', data })
-		})
+		}
 	}
 
 	render () {
@@ -35,7 +38,7 @@ class Itinerary extends MetaComponent {
 	 */
 	getAddItem () {
 		const metaType = document.querySelector('meta[name="tepago-type"]');
-		let isCustomer = (metaType !== null) && (metaType.content !== 'client');
+		let isCustomer = (metaType === null);
 		return !isCustomer
 		? `
 			<div class="new-item">
@@ -76,7 +79,7 @@ class Itinerary extends MetaComponent {
 							<h3>${item.title} <span class="type">${item.status}</span> </h3>
 							<p>${description}</p>
 						</div>
-						<h3>${ item.amount ? item.amount : '' }</h3>
+						<h3>$${ item.amount ? item.amount : '' }</h3>
 					</div>
 				`
 			})

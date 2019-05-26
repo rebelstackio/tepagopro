@@ -11,7 +11,7 @@ class Body extends MetaComponent {
 	}
 
 	render () {
-		return document.createElement('item-format');
+		return document.createElement('itinerary-format');
 	}
 	/**
 	 * change the view on dispatch
