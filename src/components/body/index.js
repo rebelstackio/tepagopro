@@ -4,6 +4,7 @@ import './itinerary';
 import './contactus';
 import './settings';
 import './paypal';
+import './additem';
 
 class Body extends MetaComponent {
 	constructor () {
@@ -47,6 +48,11 @@ class Body extends MetaComponent {
 				const payPal = document.createElement('paypal-crud');
 				this.innerHTML = ''
 				this.appendChild(payPal);
+				break;
+			case 6: 
+				const itineraryItem = document.createElement('itinerary-item');
+				this.innerHTML = ''
+				this.appendChild(itineraryItem);
 				break;
 			default:
 				const shopping = document.createElement('item-format');

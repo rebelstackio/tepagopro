@@ -9,3 +9,7 @@
 		left: -265px !important;
 	}
 }
+
+main-body {
+    overflow: auto;
+}

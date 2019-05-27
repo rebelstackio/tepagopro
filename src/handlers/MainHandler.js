@@ -2,7 +2,7 @@
 * DEFAULT HANDLER
 */
 
-import { getItinerary, getPaypalAcounts } from '../controllers/firebase';
+import { getItinerary, getPaypalAcounts, getOptions } from '../controllers/firebase';
 
 const MainDefaultState = {
 	viewTitle: 'Shopping cart',
@@ -27,6 +27,11 @@ const MainDefaultState = {
 			}
 		]
 	},
+	options: getOptions(),
+	optionSelected: {
+		title: '',
+		price: ''
+	},
 	lastItinerary: {},
 	paypalAcounts: getPaypalAcounts()
 };
@@ -47,6 +52,9 @@ export default {
 					break;
 				case 4: 
 					state.Main.viewTitle = 'Contact us';
+					break;
+				case 6:
+					state.Main.viewTitle = 'Add item';
 					break;
 				default:
 					state.Main.viewTitle = 'Shopping cart'
@@ -101,6 +109,7 @@ export default {
 					qty: data.qty
 				}]
 			});
+			state.Main.optionSelected = { title: '', price: '' };
 			state.Main.itinerary = newItinerary;
 			return { newState: state }
 		},
@@ -125,6 +134,10 @@ export default {
 				}]
 			});
 			state.Main.itinerary = newItinerary;
+			return { newState: state }
+		},
+		'SELECT-ITEM': (action, state) => {
+			state.Main.optionSelected = action.data;
 			return { newState: state }
 		}
 	}

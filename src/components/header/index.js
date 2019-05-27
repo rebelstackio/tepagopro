@@ -37,7 +37,9 @@ class Header extends MetaComponent {
 		const { viewTitle } = global.TPGstorage.getState().Main;
 		let total = '0.00';
 		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		const metaType = document.querySelector('meta[name="tepago-type"]');
 		let isMeta = metaAsset !== null;
+		let isCustomer = (metaType === null);
 		return `
 		<div>
 			<div class="title-box">
@@ -52,7 +54,7 @@ class Header extends MetaComponent {
 					$${ total }
 				</span> 
 			</div>
-			<div id="menu-button">
+			<div class="${isCustomer ? 'tepago-hide' : ''}" id="menu-button">
 				<img id="menu-img" src="${ isMeta 
 					? metaAsset.content + '/src/assets/icons/bars-solid.svg'
 					: menuIcon}"></img>

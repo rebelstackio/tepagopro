@@ -4,6 +4,8 @@ import plane from '../../../assets/icons/itinerary/plane.svg';
 import cup from '../../../assets/icons/itinerary/cup.svg';
 import car from '../../../assets/icons/itinerary/car.svg';
 import bed from '../../../assets/icons/itinerary/bed.svg';
+import utensils from '../../../assets/icons/itinerary/utensils.svg';
+import ship from '../../../assets/icons/itinerary/ship.svg';
 
 class Itinerary extends MetaComponent {
 	constructor () {
@@ -16,14 +18,18 @@ class Itinerary extends MetaComponent {
 		const addBtn = document.querySelector('#add-item');
 		if (addBtn !== null) {
 			addBtn.addEventListener('click', () => {
-				const inputArray = document.querySelectorAll('.input-area > input');
+				this.storage.dispatch({
+					type: 'CHANGE-VIEW',
+					viewNumber: 6
+				});
+				/*const inputArray = document.querySelectorAll('.input-area > input');
 				let data = {};
 				inputArray.forEach(inp => {
 					data[inp.name] = inp.value;
 				});
 				const icon = document.querySelector('.input-area > select').value;
 				data.icon = icon;
-				this.storage.dispatch({ type: 'ADD-ITINERARY', data })
+				this.storage.dispatch({ type: 'ADD-ITINERARY', data })*/
 			});
 		}
 	}
@@ -42,29 +48,15 @@ class Itinerary extends MetaComponent {
 		return !isCustomer
 		? `
 			<div class="new-item">
-				<div class="input-area">
-					<input type="text" name="title" placeholder="title"/>
-					<input type="text" name="description" placeholder="Description"/>
-					<input type="text" name="qty" placeholder="Qty"/>
-					<input type="text" name="price" placeholder="Price"/>
-					<input type="text" name="date" placeholder="Date"/>
-					<input type="text" name="time" placeholder="Time"/>
-					<select>
-						<option value="car"> Car </option>
-						<option value="bed"> Bed </option>
-						<option value="cup"> Cup </option>
-						<option value="plane"> Plane </option>
-						<option value="utensils"> Utensils </option>
-					</select>
-				</div>
 				<input type="submit" id="add-item" value="Add">
 			</div>
-		` : '';
+		` : `
+			<input type="submit" id="pay-btn" value="Pay">
+		`;
 	}
 
 	createItineraryItem () {
 		const { itinerary } = this.storage.getState().Main;
-		console.log(itinerary);
 		let html = '';
 		Object.keys(itinerary).forEach(date => {
 			html += `<span class="date-title"> ${date} </span>`
@@ -101,7 +93,11 @@ class Itinerary extends MetaComponent {
 			case 'car':
 				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/car.svg' : car;
 			case 'bed':
-				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/bed.svg' : bed; 
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/bed.svg' : bed;
+			case 'utensils':
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/utensils.svg' : utensils; 
+			case 'ship':
+				return isMeta ? metaAsset.content + 'src/assets/icons/itinerary/ship.svg' : ship;
 			default:
 				//TODO: add default icon
 				break;
