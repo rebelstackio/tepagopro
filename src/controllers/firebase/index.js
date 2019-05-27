@@ -4,50 +4,7 @@
  * TODO: implement this
  */
 export function getItinerary () {
-	return {
-		'Thursday, Jan 8, 2017': [
-			{
-				time: '00:00 PTD AM',
-				amount: '00.00',
-				type: 'plane',
-				title: 'XX-XXX',
-				status: 'SCHEDULE',
-				description: 'Plane detail(Airline)\nConf:XXXXX\nDep.Teminal X, Gate X, Seat: XX\nArr: 00:00 AM PTD'
-			},
-			{
-				time: '00:00 PTD AM',
-				type: 'cup',
-				title: 'X Hours at XXXXXXXXX Airport Cafe',
-				description:'',
-				status: 'DISABLED'
-			},{
-				time: '00:00 PTD AM',
-				amount: '00.00',
-				type: 'plane',
-				title: 'XX-XXX',
-				status: 'SCHEDULE',
-				description: 'Plane detail(Airline)\nConf:XXXXX\nDep.Teminal X, Gate X, Seat: XX\nArr: 00:00 AM PTD'
-			},
-			{
-				time: '00:00 PTD AM',
-				amount: '00.00',
-				type: 'car',
-				title: 'XX-XXX',
-				status: 'PENDING',
-				description: 'Car Detail:\nPlate:XXX-XX\nArr: 00:00 PM PTD'
-			}
-		],
-		'Friday, Jan 09, 2017': [
-			{
-				time: '00:00 PTD AM',
-				amount: '00.00',
-				type: 'hotel',
-				title: 'Hote: XXXXX',
-				status: 'SCHEDULE',
-				description: 'Check in: 00:00 AM PTD'
-			}
-		]
-	}
+	return {}
 }
 /**
  * get remenber accounts
@@ -62,5 +19,28 @@ export function getPaypalAcounts () {
 			email: 'example@test.com',
 			isDefault: false
 		}
+	]
+}
+
+export function getOptions () {
+	return [
+		{
+			title: 'Paracas Reserve and Islas Ballestas',
+			description: 'Transfer to Paracas dock<br/>English speaking guide',
+			price: 28,
+			icon: 'ship'
+		},
+		{
+			title: 'Islas Ballestas First Class',
+			description: 'Transfer to Paracas dock<br/>English speaking guide<br/>Islas Ballestas First Class',
+			price: 50,
+			icon: 'ship'
+		},
+		{
+			title: 'Cruise member islas ballestas standard tour',
+			description: 'Pickup and dropoff directly from port/harbor<br/>All entrance fees<br/>Private transportation.',
+			price: 85,
+			icon: 'ship'
+		},
 	]
 }

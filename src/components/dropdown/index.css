@@ -7,9 +7,9 @@ dropdown-menu {
 
 dropdown-menu > div {
 	position: relative;
-	width: 80vw;
+	width: 280px;
 	margin: auto;
-	top: -1em;
+	top: -4px;
 	background: #fff;
 	border-radius: 3px;
 	box-shadow: 1px 2px #d3d3d3;
@@ -17,6 +17,7 @@ dropdown-menu > div {
 	display: grid;
 	grid-row-gap: .5em;
 	opacity: 1;
+	left: -289px;
 }
 
 .menu-item > img {
@@ -26,6 +27,7 @@ dropdown-menu > div {
 .menu-item {
 	color: #666666;
 	font-weight: 900;
+	cursor: pointer;
 }
 .tepago-hide {
 	opacity: 0;

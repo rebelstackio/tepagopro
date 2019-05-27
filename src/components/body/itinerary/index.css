@@ -9,17 +9,17 @@ span.date-title {
 
 .itinerary-item {
 	display: grid;
-	grid-template-columns: 3rem 3rem 1fr 3rem;
-	font-size: .8rem;
+	grid-template-columns: 88px 50px 1fr auto;
+	font-size: 14px;
 	grid-column-gap: .8em;
 }
 
 .itinerary-item > * {
-	place-self: center;
+	place-self: center start;
 }
 
 .itinerary-item > img {
-	width: 2rem;
+	width: 50px;
 	height: auto;
 	padding: .5em;
 	border-radius: 50%;
@@ -48,4 +48,28 @@ span.type {
 
 .itinerary-item.SCHEDULE > img {
 	background: #8bc349;
+}
+
+.new-item {
+	display: grid;
+}
+
+.new-item input {
+	border: 1px solid #d3d3d3;
+	outline: none;
+	height: 6vh;
+	padding-left: 5px;
+}
+
+.new-item > div {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+input#pay-btn {
+	background: var(--header-color);
+	width: 60%;
+	place-self: center;
+	border-radius: 3px;
+	color: #fff;
 }

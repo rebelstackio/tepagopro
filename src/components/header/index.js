@@ -10,10 +10,10 @@ import './index.css';
 class Header extends MetaComponent {
 	
 	/**
-	 * MetaComponent constructor needs storage.
+	 * MetaComponent constructor needs TPGstorage.
 	 */
 	constructor () {
-		super(global.storage);
+		super(global.TPGstorage);
 	}
 
 	/**
@@ -21,22 +21,31 @@ class Header extends MetaComponent {
 	 */
 	addListeners() {
 		this.querySelector('#menu-button')
-		.addEventListener('click', () => {
-			this.handleMenu()
+		.addEventListener('click', (e) => {
+			const y = e.target.offsetTop - 20;
+			const x = e.target.offsetLeft;
+			console.log(x, y)
+			this.handleMenu(y, x)
 		})
 	}
 
-	handleMenu() {
-		this.storage.dispatch({type: 'OPEN-MENU'})
+	handleMenu(y, x) {
+		this.storage.dispatch({type: 'OPEN-MENU', data: {x, y}})
 	}
 
 	render () {
-		const { viewTitle } = global.storage.getState().Main;
+		const { viewTitle } = global.TPGstorage.getState().Main;
 		let total = '0.00';
+		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		const metaType = document.querySelector('meta[name="tepago-type"]');
+		let isMeta = metaAsset !== null;
+		let isCustomer = (metaType === null);
 		return `
 		<div>
 			<div class="title-box">
-				<img src="${ cartIcon }"></img>
+				<img src="${ isMeta 
+					? metaAsset.content + '/src/assets/icons/map-marker-alt-solid.svg'
+					: itineraryIcon }"></img>
 				<h4 class="title">${ viewTitle }</h4>
 			</div>
 			<div class="balance-box">
@@ -45,8 +54,10 @@ class Header extends MetaComponent {
 					$${ total }
 				</span> 
 			</div>
-			<div id="menu-button">
-				<img id="menu-img" src="${menuIcon}"></img>
+			<div class="${isCustomer ? 'tepago-hide' : ''}" id="menu-button">
+				<img id="menu-img" src="${ isMeta 
+					? metaAsset.content + '/src/assets/icons/bars-solid.svg'
+					: menuIcon}"></img>
 			</div>
 		</div>
 		`;
@@ -57,21 +68,33 @@ class Header extends MetaComponent {
 	changeIcon () {
 		const x = this.storage.getState().Main.viewNumber;
 		const titleIcon = document.querySelector('.title-box > img');
+		const metaAsset = document.querySelector('meta[name="tepago-assets"]');
+		let isMeta = metaAsset !== null;
 		switch (x) {
 			case 1:
-				titleIcon.src = itineraryIcon;
+				titleIcon.src = isMeta 
+				? metaAsset.content + '/src/assets/icons/map-marker-alt-solid.svg'
+				: itineraryIcon;
 				break;
 			case 2:
-				titleIcon.src = settingIcon;
+				titleIcon.src = isMeta
+				? metaAsset.content + '/src/assets/icons/cogs-solid.svg'
+				: settingIcon;
 				break;
 			case 3:
-				titleIcon.src = historyIcon;
+				titleIcon.src = isMeta
+				? metaAsset.content + '/src/assets/icons/history-solid.svg'
+				: historyIcon;
 				break;
 			case 4:
-				titleIcon.src = contactIcon;
+				titleIcon.src =  isMeta
+				? metaAsset.content + '/src/assets/icons/envelope-solid.svg'
+				: contactIcon;;
 				break;
 			default:
-				titleIcon.src = cartIcon;
+				titleIcon.src = isMeta
+				? metaAsset.content + '/src/assets/icons/shopping-cart-solid.svg'
+				: cartIcon;
 				break;
 		}
 	}
@@ -79,10 +102,22 @@ class Header extends MetaComponent {
 	handleStoreEvents () {
 		return {
 			'CHANGE-VIEW': () => {
-				const { viewTitle } = global.storage.getState().Main;
+				const { viewTitle } = global.TPGstorage.getState().Main;
 				this.changeIcon();
 				document.querySelector('.title').innerHTML = viewTitle;
-			}
+			},'ADD-ITINERARY': () => {
+				const { itinerary } = this.storage.getState().Main;
+			},
+			'ADD-ITINERARY-EXT': () => {
+				const { itinerary } = this.storage.getState().Main;
+				let total = 0;
+				Object.keys(itinerary).forEach(date => {
+					itinerary[date].forEach(el => {
+						total += parseFloat(el.amount) * parseInt(el.qty);
+					})
+				});
+				document.querySelector('.subtotal').innerHTML = '$' + total;
+			},
 		}
 	}
 

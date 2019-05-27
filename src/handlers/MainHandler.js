@@ -2,11 +2,11 @@
 * DEFAULT HANDLER
 */
 
-import { getItinerary, getPaypalAcounts } from '../controllers/firebase';
+import { getItinerary, getPaypalAcounts, getOptions } from '../controllers/firebase';
 
 const MainDefaultState = {
 	viewTitle: 'Shopping cart',
-	viewNumber: 0,
+	viewNumber: 1,
 	itinerary: getItinerary(),
 	inCart: {
 		'Thursday, Jan 8, 2017': [
@@ -27,6 +27,12 @@ const MainDefaultState = {
 			}
 		]
 	},
+	options: getOptions(),
+	optionSelected: {
+		title: '',
+		price: ''
+	},
+	lastItinerary: {},
 	paypalAcounts: getPaypalAcounts()
 };
 export default {
@@ -46,6 +52,9 @@ export default {
 					break;
 				case 4: 
 					state.Main.viewTitle = 'Contact us';
+					break;
+				case 6:
+					state.Main.viewTitle = 'Add item';
 					break;
 				default:
 					state.Main.viewTitle = 'Shopping cart'
@@ -82,6 +91,53 @@ export default {
 				email: action.data.email,
 				isDefault: false
 			});
+			return { newState: state }
+		},
+		'ADD-ITINERARY': (action, state) => {
+			const { data } = action;
+			const date = new Date(data.date).toDateString();
+			const { itinerary } = state.Main;
+			state.Main.lastItinerary = data;
+			const newItinerary = Object.assign({}, itinerary, {
+				[date]: [{
+					time: data.time,
+					amount: data.price,
+					type: data.icon,
+					title: data.title,
+					status: 'PENDING',
+					description: data.description,
+					qty: data.qty
+				}]
+			});
+			state.Main.optionSelected = { title: '', price: '' };
+			state.Main.itinerary = newItinerary;
+			return { newState: state }
+		},
+		'CLEAR-ITINERARY': (action, state) => {
+			state.Main.itinerary = {};
+			return { newState: state }
+		},
+		'ADD-ITINERARY-EXT': (action, state) => {
+			const { data } = action;
+			const { itinerary } = state.Main;
+			state.Main.lastItinerary = data;
+			const date = new Date(data.date).toDateString();
+			const newItinerary = Object.assign({}, itinerary, {
+				[date]: [{
+					time: data.time,
+					amount: data.price,
+					type: data.icon,
+					title: data.title,
+					status: 'PENDING',
+					description: data.description,
+					qty: data.qty
+				}]
+			});
+			state.Main.itinerary = newItinerary;
+			return { newState: state }
+		},
+		'SELECT-ITEM': (action, state) => {
+			state.Main.optionSelected = action.data;
 			return { newState: state }
 		}
 	}
