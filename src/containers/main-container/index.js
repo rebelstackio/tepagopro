@@ -13,7 +13,12 @@ class TepagoMainContainer extends MetaContainer {
 		const header = document.createElement('main-header');
 		const dropdown = document.createElement('dropdown-menu');
 		const body = document.createElement('main-body');
-		content.append(header, dropdown, body);
+		const payBtn = document.createElement('div');
+		payBtn.className = 'tepago-checkout';
+		if (typeof Culqi !== 'undefined') {
+			Culqi.publicKey = process.env.QULQUI_KEY;
+		}
+		content.append(header, dropdown, body, payBtn);
 		this.addListeners()
 		return content;
 	}

@@ -16,21 +16,28 @@ class Itinerary extends MetaComponent {
 	 */
 	addListeners () {
 		const addBtn = document.querySelector('#add-item');
+		const payBtn = document.querySelector('#pay-btn');
 		if (addBtn !== null) {
 			addBtn.addEventListener('click', () => {
 				this.storage.dispatch({
 					type: 'CHANGE-VIEW',
 					viewNumber: 6
 				});
-				/*const inputArray = document.querySelectorAll('.input-area > input');
-				let data = {};
-				inputArray.forEach(inp => {
-					data[inp.name] = inp.value;
-				});
-				const icon = document.querySelector('.input-area > select').value;
-				data.icon = icon;
-				this.storage.dispatch({ type: 'ADD-ITINERARY', data })*/
 			});
+		}
+		if (payBtn !== null) {
+			payBtn.addEventListener('click', () => {
+				if (typeof Culqi !== 'undefined') {
+					console.log(this.getTotal())
+					Culqi.settings({
+						title: 'Tepago PRO',
+						currency: 'USD',
+						description: 'Checkout Itinerary',
+						amount: this.getTotal()
+					});
+					Culqi.open();
+				}
+			})
 		}
 	}
 
@@ -40,21 +47,45 @@ class Itinerary extends MetaComponent {
 		return html;
 	}
 	/**
+	 * get the total to pay
+	 */
+	getTotal () {
+		const { itinerary } = this.storage.getState().Main;
+		let total = 0;
+		Object.keys(itinerary).forEach(date => {
+			itinerary[date].forEach(el => {
+				total += parseFloat(el.amount) * parseInt(el.qty);
+			})
+		});
+		total = total.toString().split('.').length > 1
+			? total.toString().split('.').join('')
+			: total.toString() + '00';
+		return parseInt(total);
+	}
+	/**
 	 * get the add item section
 	 */
 	getAddItem () {
 		const metaType = document.querySelector('meta[name="tepago-type"]');
 		let isCustomer = (metaType === null);
+		if (isCustomer) {
+			document.querySelector('.tepago-checkout')
+			.innerHTML = `
+				<label>Payments</label>
+				<input type="submit" id="pay-btn" value="Cards"></input>
+				<input type="submit" id="paypal-btn" value="PayPal"></input>
+			`;
+		}
 		return !isCustomer
 		? `
 			<div class="new-item">
 				<input type="submit" id="add-item" value="Add">
 			</div>
-		` : `
-			<input type="submit" id="pay-btn" value="Pay">
-		`;
+		` : '';
 	}
-
+	/**
+	 * create the itinerary vire
+	 */
 	createItineraryItem () {
 		const { itinerary } = this.storage.getState().Main;
 		let html = '';

@@ -65,11 +65,3 @@ span.type {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
-
-input#pay-btn {
-	background: var(--header-color);
-	width: 60%;
-	place-self: center;
-	border-radius: 3px;
-	color: #fff;
-}
