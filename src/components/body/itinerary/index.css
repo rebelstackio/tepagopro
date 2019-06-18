@@ -65,3 +65,7 @@ span.type {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
+
+div#paypal-btn {
+	grid-area: 1 / 2 / span 2;
+}

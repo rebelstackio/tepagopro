@@ -106,7 +106,9 @@ class Header extends MetaComponent {
 		let total = 0;
 		Object.keys(itinerary).forEach(date => {
 			itinerary[date].forEach(el => {
-				total += parseFloat(el.amount) * parseInt(el.qty);
+				if (el.status !== 'SCHEDULE') {
+					total += parseFloat(el.amount) * parseInt(el.qty);
+				}
 			})
 		});
 		document.querySelector('.subtotal').innerHTML = '$' + total;
