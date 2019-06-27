@@ -51,29 +51,31 @@ class Itinerary extends MetaComponent {
 	 */
 	setPaypalCheckout () {
 		const units = this.getUnits();
-		paypal.Buttons({
-			createOrder: function(data, actions) {
-				// Set up the transaction
-				return actions.order.create({
-					purchase_units: units
-				});
-			},
-			onApprove: function(data, actions) {
-				// Capture the funds from the transaction
-				return actions.order.capture().then(function (details) {
-					global.TPGstorage.dispatch({
-						type: 'SALES_APROVED',
-						data: {
-							create_time: details.create_time,
-							id: details.id,
-							payer: details.payer,
-							purchase_units: details.purchase_units,
-							status: details.status
-						}
+		if (typeof paypal !== 'undefined'){
+			paypal.Buttons({
+				createOrder: function(data, actions) {
+					// Set up the transaction
+					return actions.order.create({
+						purchase_units: units
 					});
-				});
-			}
-		}).render('#paypal-btn');
+				},
+				onApprove: function(data, actions) {
+					// Capture the funds from the transaction
+					return actions.order.capture().then(function (details) {
+						global.TPGstorage.dispatch({
+							type: 'SALES_APROVED',
+							data: {
+								create_time: details.create_time,
+								id: details.id,
+								payer: details.payer,
+								purchase_units: details.purchase_units,
+								status: details.status
+							}
+						});
+					});
+				}
+			}).render('#paypal-btn');
+		}
 	}
 	/**
 	 * get the units to paypal
