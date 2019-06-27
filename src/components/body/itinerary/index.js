@@ -61,7 +61,6 @@ class Itinerary extends MetaComponent {
 			onApprove: function(data, actions) {
 				// Capture the funds from the transaction
 				return actions.order.capture().then(function (details) {
-					console.log('units', details.purchase_units);
 					global.TPGstorage.dispatch({
 						type: 'SALES_APROVED',
 						data: {
@@ -81,22 +80,26 @@ class Itinerary extends MetaComponent {
 	 */
 	getUnits () {
 		const { itinerary } = this.storage.getState().Main;
-		const resp = [];
+		let description = '';
+		let total = 0;
 		Object.keys(itinerary).forEach(date => {
 			itinerary[date].forEach(el => {
 				if (el.status !== 'SCHEDULE') {
-					//total += parseFloat(el.amount) * parseInt(el.qty);
-					resp.push({
-						description: el.title + ' For: ' + el.qty, 
-						amount: {
-							value: parseFloat(el.amount) * parseInt(el.qty)
-						}
-					})
+					total += parseFloat(el.amount) * parseInt(el.qty);
+					description +='\n' + el.title + ' For: ' + el.qty;
+					
 				}
 			});
 		});
-		console.log(resp);
-		return resp;
+		return [
+			{
+				description, 
+				amount: {
+					currency: 'USD',
+					value: total
+				}
+			}
+		];
 	}
 	/**
 	 * get the total to pay
@@ -126,7 +129,7 @@ class Itinerary extends MetaComponent {
 			document.querySelector('.tepago-checkout')
 			.innerHTML = `
 				<label>Payments</label>
-				<input type="submit" id="pay-btn" value="Cards"></input>
+				<input type="submit" id="pay-btn" value="Culqi"></input>
 				<div id="paypal-btn"></input>
 			`;
 		}
