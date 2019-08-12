@@ -18,6 +18,7 @@ class Itinerary extends MetaComponent {
 	addListeners () {
 		const addBtn = document.querySelector('#add-item');
 		const payBtn = document.querySelector('#pay-btn');
+		const deletArr = document.querySelectorAll('span[class^="delete-"]');
 		if (addBtn !== null) {
 			addBtn.addEventListener('click', () => {
 				this.storage.dispatch({
@@ -39,6 +40,11 @@ class Itinerary extends MetaComponent {
 				}
 			})
 		}
+		deletArr.forEach(delBtn => {
+			delBtn.addEventListener('click', () => {
+				console.log(delBtn.className);
+			})
+		});
 	}
 
 	render () {
@@ -165,6 +171,10 @@ class Itinerary extends MetaComponent {
 							? '$' + item.amount :
 							`<span class="type">${item.status}</span>` }
 						</h3>
+						${ item.status !== 'SCHEDULE'
+							? '<span class="delete-'+ item.id +'"> X </span>'
+							: ''
+						}
 					</div>
 				`
 			})

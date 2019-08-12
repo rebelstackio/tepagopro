@@ -5,6 +5,7 @@ import itineraryIcon from '../../assets/icons/map-marker-alt-solid.svg';
 import settingIcon from '../../assets/icons/cogs-solid.svg';
 import contactIcon from '../../assets/icons/envelope-solid.svg';
 import historyIcon from '../../assets/icons/history-solid.svg';
+import '../dropdown';
 import './index.css';
 
 class Header extends MetaComponent {
@@ -20,12 +21,10 @@ class Header extends MetaComponent {
 	 * add DOM listener
 	 */
 	addListeners() {
-		this.querySelector('#menu-button')
+		this.querySelector('#menu-img')
 		.addEventListener('click', (e) => {
-			const y = e.target.offsetTop - 20;
-			const x = e.target.offsetLeft;
-			console.log(x, y)
-			this.handleMenu(y, x)
+			const DD = document.querySelector('.menu-body')
+			DD.classList.remove('tepago-hide');
 		})
 	}
 
@@ -58,6 +57,7 @@ class Header extends MetaComponent {
 				<img id="menu-img" src="${ isMeta 
 					? metaAsset.content + '/src/assets/icons/bars-solid.svg'
 					: menuIcon}"></img>
+				<dropdown-menu> </dropdown-menu>
 			</div>
 		</div>
 		`;

@@ -4,12 +4,6 @@
 	--light-grey: #e2e2e2;
 }
 
-@media only screen and (min-width: 800px) { 
-	.menu-body {
-		left: -265px !important;
-	}
-}
-
 main-body {
 	overflow: auto;
 }

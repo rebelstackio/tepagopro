@@ -129,7 +129,8 @@ export default {
 					title: data.title,
 					status: data.status,
 					description: data.description,
-					qty: data.qty
+					qty: data.qty,
+					id: data.id
 				});
 			} else {
 				itinerary[date] = [
@@ -140,7 +141,8 @@ export default {
 						title: data.title,
 						status: data.status,
 						description: data.description,
-						qty: data.qty
+						qty: data.qty,
+						id: data.id
 					}
 				];
 			}
