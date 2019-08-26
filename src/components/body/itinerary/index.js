@@ -10,28 +10,41 @@ import ship from '../../../assets/icons/itinerary/ship.svg';
 class Itinerary extends MetaComponent {
 	constructor () {
 		super(global.TPGstorage);
+		this.setPaypalCheckout = this.setPaypalCheckout.bind(this);
 	}
 	/**
 	 * ADD DOM LISTENERS
 	 */
 	addListeners () {
 		const addBtn = document.querySelector('#add-item');
+		const payBtn = document.querySelector('#pay-btn');
+		const deletArr = document.querySelectorAll('span[class^="delete-"]');
 		if (addBtn !== null) {
 			addBtn.addEventListener('click', () => {
 				this.storage.dispatch({
 					type: 'CHANGE-VIEW',
 					viewNumber: 6
 				});
-				/*const inputArray = document.querySelectorAll('.input-area > input');
-				let data = {};
-				inputArray.forEach(inp => {
-					data[inp.name] = inp.value;
-				});
-				const icon = document.querySelector('.input-area > select').value;
-				data.icon = icon;
-				this.storage.dispatch({ type: 'ADD-ITINERARY', data })*/
 			});
 		}
+		if (payBtn !== null) {
+			payBtn.addEventListener('click', () => {
+				if (typeof Culqi !== 'undefined') {
+					Culqi.settings({
+						title: 'Tepago PRO',
+						currency: 'USD',
+						description: 'Checkout Itinerary',
+						amount: this.getTotal()
+					});
+					Culqi.open();
+				}
+			})
+		}
+		deletArr.forEach(delBtn => {
+			delBtn.addEventListener('click', () => {
+				console.log(delBtn.className);
+			})
+		});
 	}
 
 	render () {
@@ -40,21 +53,104 @@ class Itinerary extends MetaComponent {
 		return html;
 	}
 	/**
+	 * set the paypal btn
+	 */
+	setPaypalCheckout () {
+		const units = this.getUnits();
+		if (typeof paypal !== 'undefined'){
+			paypal.Buttons({
+				createOrder: function(data, actions) {
+					// Set up the transaction
+					return actions.order.create({
+						purchase_units: units
+					});
+				},
+				onApprove: function(data, actions) {
+					// Capture the funds from the transaction
+					return actions.order.capture().then(function (details) {
+						global.TPGstorage.dispatch({
+							type: 'SALES_APROVED',
+							data: {
+								create_time: details.create_time,
+								id: details.id,
+								payer: details.payer,
+								purchase_units: details.purchase_units,
+								status: details.status
+							}
+						});
+					});
+				}
+			}).render('#paypal-btn');
+		}
+	}
+	/**
+	 * get the units to paypal
+	 */
+	getUnits () {
+		const { itinerary } = this.storage.getState().Main;
+		let description = '';
+		let total = 0;
+		Object.keys(itinerary).forEach(date => {
+			itinerary[date].forEach(el => {
+				if (el.status !== 'SCHEDULE') {
+					total += parseFloat(el.amount) * parseInt(el.qty);
+					description +='\n' + el.title + ' For: ' + el.qty;
+					
+				}
+			});
+		});
+		return [
+			{
+				description, 
+				amount: {
+					currency: 'USD',
+					value: total
+				}
+			}
+		];
+	}
+	/**
+	 * get the total to pay
+	 */
+	getTotal () {
+		const { itinerary } = this.storage.getState().Main;
+		let total = 0;
+		Object.keys(itinerary).forEach(date => {
+			itinerary[date].forEach(el => {
+				if (el.status !== 'SCHEDULE') {
+					total += parseFloat(el.amount) * parseInt(el.qty);
+				}
+			})
+		});
+		total = total.toString().split('.').length > 1
+			? total.toString().split('.').join('')
+			: total.toString() + '00';
+		return parseInt(total);
+	}
+	/**
 	 * get the add item section
 	 */
 	getAddItem () {
 		const metaType = document.querySelector('meta[name="tepago-type"]');
 		let isCustomer = (metaType === null);
+		if (isCustomer) {
+			document.querySelector('.tepago-checkout')
+			.innerHTML = `
+				<label>Payments</label>
+				<input type="submit" id="pay-btn" value="Culqi"></input>
+				<div id="paypal-btn"></input>
+			`;
+		}
 		return !isCustomer
 		? `
 			<div class="new-item">
 				<input type="submit" id="add-item" value="Add">
 			</div>
-		` : `
-			<input type="submit" id="pay-btn" value="Pay">
-		`;
+		` : '';
 	}
-
+	/**
+	 * create the itinerary vire
+	 */
 	createItineraryItem () {
 		const { itinerary } = this.storage.getState().Main;
 		let html = '';
@@ -68,10 +164,17 @@ class Itinerary extends MetaComponent {
 						<span>${item.time}</span>
 						<img src=${icon}></img>
 						<div class="itinerary-info">
-							<h3>${item.title} <span class="type">${item.status}</span> </h3>
+							<h3>${item.title} </h3>
 							<p>${description}</p>
 						</div>
-						<h3>$${ item.amount ? item.amount : '' }</h3>
+						<h3>${ item.status !== 'SCHEDULE'
+							? '$' + item.amount :
+							`<span class="type">${item.status}</span>` }
+						</h3>
+						${ item.status !== 'SCHEDULE'
+							? '<span class="delete-'+ item.id +'"> X </span>'
+							: ''
+						}
 					</div>
 				`
 			})
@@ -109,16 +212,19 @@ class Itinerary extends MetaComponent {
 			'ADD-ITINERARY': () => {
 				this.innerHTML = this.createItineraryItem();
 				this.innerHTML += this.getAddItem();
+				this.setPaypalCheckout();
 				this.addListeners();
 			},
 			'ADD-ITINERARY-EXT': () => {
 				this.innerHTML = this.createItineraryItem();
 				this.innerHTML += this.getAddItem();
+				this.setPaypalCheckout();
 				this.addListeners();
 			},
 			'CLEAR-ITINERARY': () => {
 				this.innerHTML = this.createItineraryItem();
 				this.innerHTML = this.getAddItem();
+				this.setPaypalCheckout();
 				this.addListeners();
 			}
 		}

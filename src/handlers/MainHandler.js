@@ -39,7 +39,6 @@ export default {
 	MainDefaultState,
 	MainHandler: {
 		'CHANGE-VIEW': (action, state) => {
-			console.log(action)
 			switch (action.viewNumber) {
 				case 1: 
 					state.Main.viewTitle = 'Itinerary';
@@ -119,21 +118,35 @@ export default {
 		},
 		'ADD-ITINERARY-EXT': (action, state) => {
 			const { data } = action;
-			const { itinerary } = state.Main;
+			let { itinerary } = state.Main;
 			state.Main.lastItinerary = data;
 			const date = new Date(data.date).toDateString();
-			const newItinerary = Object.assign({}, itinerary, {
-				[date]: [{
+			if (itinerary[date]) {
+				itinerary[date].push({
 					time: data.time,
 					amount: data.price,
 					type: data.icon,
 					title: data.title,
-					status: 'PENDING',
+					status: data.status,
 					description: data.description,
-					qty: data.qty
-				}]
-			});
-			state.Main.itinerary = newItinerary;
+					qty: data.qty,
+					id: data.id
+				});
+			} else {
+				itinerary[date] = [
+					{
+						time: data.time,
+						amount: data.price,
+						type: data.icon,
+						title: data.title,
+						status: data.status,
+						description: data.description,
+						qty: data.qty,
+						id: data.id
+					}
+				];
+			}
+			state.Main.itinerary = itinerary;
 			return { newState: state }
 		},
 		'SELECT-ITEM': (action, state) => {

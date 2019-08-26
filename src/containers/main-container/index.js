@@ -1,7 +1,6 @@
 import { MetaContainer } from '@rebelstack-io/metaflux';
 import '../../handlers';
 import '../../components/header';
-import '../../components/dropdown';
 import '../../components/body';
 import '../../assets/css/general.css';
 
@@ -9,11 +8,15 @@ class TepagoMainContainer extends MetaContainer {
 	// eslint-disable-next-line class-method-use-this
 	render () {
 		const content = document.createElement('div');
-		content.id = 'container';
+		content.id = 'tpg-container';
 		const header = document.createElement('main-header');
-		const dropdown = document.createElement('dropdown-menu');
 		const body = document.createElement('main-body');
-		content.append(header, dropdown, body);
+		const payBtn = document.createElement('div');
+		payBtn.className = 'tepago-checkout';
+		if (typeof Culqi !== 'undefined') {
+			Culqi.publicKey = process.env.QULQUI_KEY;
+		}
+		content.append(header, body, payBtn);
 		this.addListeners()
 		return content;
 	}

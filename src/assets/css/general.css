@@ -4,12 +4,36 @@
 	--light-grey: #e2e2e2;
 }
 
-@media only screen and (min-width: 800px) { 
-	.menu-body {
-		left: -265px !important;
-	}
+main-body {
+	overflow: auto;
 }
 
-main-body {
-    overflow: auto;
+.tepago-checkout {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 10px;
+	padding: 0 10px 0 10px;
+}
+.tepago-checkout > input {
+	background: var(--header-color);
+	border-radius: 3px;
+	color: #fff;
+}
+
+.tepago-checkout > label {
+	grid-area: 1 / 1 / span 1 / span 2;
+	font-size: 14px;
+	color: #666;
+	font-style: italic;
+}
+
+#tpg-container {
+    width: 100%;
+    height: 100%;
+    justify-self: center;
+    align-self: center;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    padding: 0em 0em 1em 0em;
+    border-radius: 4px;
 }

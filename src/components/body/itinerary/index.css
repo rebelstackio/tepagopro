@@ -9,7 +9,7 @@ span.date-title {
 
 .itinerary-item {
 	display: grid;
-	grid-template-columns: 88px 50px 1fr auto;
+	grid-template-columns: 88px 50px 1fr auto auto;
 	font-size: 14px;
 	grid-column-gap: .8em;
 }
@@ -66,10 +66,13 @@ span.type {
 	grid-template-columns: 1fr 1fr;
 }
 
-input#pay-btn {
-	background: var(--header-color);
-	width: 60%;
-	place-self: center;
-	border-radius: 3px;
-	color: #fff;
+div#paypal-btn {
+	grid-area: 1 / 2 / span 2;
+}
+
+span[class^="delete-"] {
+	font-size: 16px;
+	font-weight: 900;
+	color: #b92929;
+	cursor: pointer;
 }

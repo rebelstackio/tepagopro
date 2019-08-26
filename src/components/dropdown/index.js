@@ -89,11 +89,6 @@ class Dropdown extends MetaComponent {
 
 	handleStoreEvents () {
 		return {
-			'OPEN-MENU': (action) => {
-				const DD = document.querySelector('.menu-body')
-				DD.setAttribute('style', 'top:' + action.data.y + 'px; left: 15px;')
-				DD.classList.remove('tepago-hide');
-			},
 			'CLOSE-MENU': () => {
 				document.querySelector('.menu-body').classList.add('tepago-hide');
 			}
