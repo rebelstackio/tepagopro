@@ -1,4 +1,6 @@
-# Tepago pro a sales tool for tours
+# Tepago pro 
+
+Reservation-based shopping cart with payment-gateway integrations
 
 ## Getting started
 
